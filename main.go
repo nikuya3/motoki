@@ -13,5 +13,6 @@ func handler(w http.ResponseWriter, r *http.Request) {
 func main() {
 	fmt.Printf("Hello web")
 	http.HandleFunc("/", handler)
-	http.ListenAndServe(":"+os.Getenv("Port"), nil)
+	fmt.Printf(os.Getenv("PORT"))
+	http.ListenAndServe(":"+os.Getenv("PORT"), nil)
 }

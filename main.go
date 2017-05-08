@@ -1,17 +1,16 @@
 package main
 
 import (
-	"bytes"
 	"fmt"
 	"log"
 	"net/http"
 	"os"
-	"os/exec"
 )
 
 func handler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "test")
-	cmd := exec.Command("Rscript", "pred/recognition.R", "pred/voices/erwin.wav")
+	log.Fatal("test")
+	/*cmd := exec.Command("Rscript", "pred/recognition.R", "pred/voices/erwin.wav")
 	var out bytes.Buffer
 	cmd.Stdout = &out
 	err := cmd.Run()
@@ -19,7 +18,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		log.Fatal(err)
 		fmt.Fprintf(w, "Internal server error")
 	}
-	fmt.Fprintf(w, out.String())
+	fmt.Fprintf(w, out.String())*/
 }
 
 func main() {

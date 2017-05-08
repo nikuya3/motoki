@@ -10,7 +10,7 @@ import (
 )
 
 func handler(w http.ResponseWriter, r *http.Request) {
-	cmd := exec.Command("fakechroot", "fakeroot", "chroot", "/app/.root", "/usr/bin/Rscript", "pred/recognition.R", "pred/voices/erwin.wav")
+	cmd := exec.Command("Rscript", "pred/recognition.R", "pred/voices/erwin.wav")
 	var out bytes.Buffer
 	cmd.Stdout = &out
 	err := cmd.Run()

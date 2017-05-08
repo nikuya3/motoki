@@ -6,4 +6,4 @@ install_if_missing = function(p) {
   }
 }
 
-#invisible(sapply(my_packages, install_if_missing))
+invisible(sapply(my_packages, install_if_missing))

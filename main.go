@@ -16,6 +16,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	cmd.Stdout = &out
 	err := cmd.Run()
 	if err != nil {
+		fmt.Fprintf(w, out.String())
 		log.Print(err)
 		fmt.Fprintf(w, "Internal server error")
 	}

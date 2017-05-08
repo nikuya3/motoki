@@ -1,7 +1,6 @@
 library(fftw)
 library(seewave)
 library(tuneR)
-library(caret)
 
 humanFrequency <- 280
 

@@ -10,6 +10,7 @@ import (
 )
 
 func handler(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintf(w, "test")
 	cmd := exec.Command("Rscript", "pred/recognition.R", "pred/voices/erwin.wav")
 	var out bytes.Buffer
 	cmd.Stdout = &out

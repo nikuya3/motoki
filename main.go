@@ -2,14 +2,12 @@ package main
 
 import (
 	"fmt"
-	"log"
 	"net/http"
 	"os"
 )
 
 func handler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "test")
-	log.Fatal("test")
 	/*cmd := exec.Command("Rscript", "pred/recognition.R", "pred/voices/erwin.wav")
 	var out bytes.Buffer
 	cmd.Stdout = &out

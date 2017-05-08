@@ -1,3 +1,4 @@
+library(fftw)
 library(seewave)
 library(tuneR)
 
@@ -31,7 +32,7 @@ analyzeWav <- function(file, start = 0, end = Inf) {
   
   b <- c(0, 22)
   dom <- dfreq(tuneWave, f = tuneWave@samp.rate, wl = 2048, ylim = c(0, humanFrequency / 1000),
-               ovlp = 0, threshold = 5, bandpass = b * 1000, plot = F)[, 2]
+               ovlp = 0, threshold = 5, bandpass = b * 1000, fftw = T, plot = F)[, 2]
   
   meandom <- mean(dom, na.rm = TRUE)
   mindom <- min(dom, na.rm = TRUE)

@@ -1,4 +1,4 @@
-my_packages = c("seewave", "tuneR")
+my_packages = c("seewave", "tuneR", "fftw")
 
 install_if_missing = function(p) {
   if (p %in% rownames(installed.packages()) == FALSE) {

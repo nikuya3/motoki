@@ -10,18 +10,29 @@ import (
 	"os/exec"
 )
 
+func handleError(e error) {
+	if e != nil {
+		log.Print(e)
+	}
+}
+
 func handler(w http.ResponseWriter, r *http.Request) {
 	body, err := ioutil.ReadAll(r.Body)
-	if err != nil {
-		log.Print(err)
-	}
+	handleError(err)
 	filePath := "tmp.wav"
 	log.Print(body[:10])
-	err2 := ioutil.WriteFile(filePath, body, 0644)
+	/*err2 := ioutil.WriteFile(filePath, body, 0644)
 	log.Printf("File %s", err2)
 	if err2 != nil {
 		log.Print(err2)
-	}
+	}*/
+	f, err3 := os.Create(filePath)
+	handleError(err3)
+	defer f.Close()
+	n, err4 := f.Write(body)
+	handleError(err4)
+	log.Printf("Wrote %d bytes", n)
+	f.Sync()
 	cmd := exec.Command("Rscript", "/app/pred/recognition.R", filePath)
 	var out bytes.Buffer
 	cmd.Stdout = &out

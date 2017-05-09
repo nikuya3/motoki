@@ -33,7 +33,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	handleError(err4)
 	log.Printf("Wrote %d bytes", n)
 	f.Sync()*/
-	createFile := exec.Command("echo", string(body), ">", filePath)
+	createFile := exec.Command("echo", "Hi", ">", filePath)
 	res := createFile.Run()
 	if res != nil {
 		log.Print(res)

@@ -1,5 +1,5 @@
-library(caret)
 library(fftw)
+library(randomForest)
 library(seewave)
 library(tuneR)
 
@@ -58,9 +58,7 @@ analyzeWav <- function(file, start = 0, end = Inf) {
 
 path <- commandArgs(trailingOnly = T)
 analyzedVoice <- analyzeWav(path, end = 20)
-#control <- trainControl(method = "cv", number = 10)
-#model.forest <- train(label ~ ., data = file, method = "rf", metric = "Accuracy", trControl = control)
 model.forest <- readRDS('/app/pred/model.forest.rds')
 prediction <- predict(model.forest, analyzedVoice)
 cat(prediction)
-cat(prediction, file = 'prediction.txt')
+#cat(prediction, file = 'prediction.txt')

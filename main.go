@@ -2,6 +2,7 @@ package main
 
 import (
 	"bytes"
+	"database/sql"
 	"fmt"
 	"io/ioutil"
 	"log"
@@ -19,26 +20,9 @@ func handleError(e error) {
 func handler(w http.ResponseWriter, r *http.Request) {
 	body, err := ioutil.ReadAll(r.Body)
 	handleError(err)
-	filePath := "tmp.wav"
+	filePath := "/tmp/voice.wav"
 	log.Print(body[:10])
-	/*err2 := ioutil.WriteFile(filePath, body, 0644)
-	log.Printf("File %s", err2)
-	if err2 != nil {
-		log.Print(err2)
-	}*/
-	/*f, err3 := os.Create(filePath)
-	handleError(err3)
-	defer f.Close()
-	n, err4 := f.Write(body)
-	handleError(err4)
-	log.Printf("Wrote %d bytes", n)
-	f.Sync()*/
-	createFile := exec.Command("echo", "Hi", ">", filePath)
-	res := createFile.Run()
-	if res != nil {
-		log.Print(res)
-		fmt.Fprintf(w, "Internal server error")
-	}
+	ioutil.WriteFile(filePath, body, 0644)
 	cmd := exec.Command("Rscript", "/app/pred/recognition.R", filePath)
 	var out bytes.Buffer
 	cmd.Stdout = &out
@@ -49,6 +33,13 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, "Internal server error")
 	}
 	fmt.Fprintf(w, out.String())
+}
+
+func saveVoice(data []byte) {
+	db, err := sql.Open("postgres", os.Getenv("DATABASE_URL"))
+	handleError(err)
+	db.Exec("CREATE TABLE IF NOT EXISTS voices (id bigint unsigned primary key, data bytea not null)")
+	db.Exec("INSERT INTO voices VALUES (?)", data)
 }
 
 func main() {

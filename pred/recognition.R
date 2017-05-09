@@ -2,6 +2,7 @@ library(fftw)
 library(randomForest)
 library(seewave)
 library(tuneR)
+library(RPostgreSQL)
 
 humanFrequency <- 280
 
@@ -57,6 +58,8 @@ analyzeWav <- function(file, start = 0, end = Inf) {
 }
 
 path <- commandArgs(trailingOnly = T)
+pg <- dbDriver("PostgreSQL")
+con <- dbConnect(drv = pg, host = "ec2-54-221-255-153.compute-1.amazonaws.com", port = 5432, dbname = "d5lt84kg6d6kpd", user = 'cpsnnurbjhrrmf', password = 'bf11b782407c2085826ae94cb2d10d5f7b178660dabf77e7e14e85b6bfab77da')
 analyzedVoice <- analyzeWav(path, end = 20)
 model.forest <- readRDS('/app/pred/model.forest.rds')
 prediction <- predict(model.forest, analyzedVoice)

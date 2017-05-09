@@ -16,11 +16,14 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		log.Print(err)
 	}
 	filePath := "/app/pred/voices/tmp.wav"
+	log.Print(body)
 	err2 := ioutil.WriteFile(filePath, body, 0644)
+	log.Printf("File %s", err2)
 	if err2 != nil {
 		log.Print(err2)
 	}
 	cmd := exec.Command("Rscript", "/app/pred/recognition.R", filePath)
+	log.Printf("Cmd %s", cmd)
 	var out bytes.Buffer
 	cmd.Stdout = &out
 	result := cmd.Run()

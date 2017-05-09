@@ -26,13 +26,19 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	if err2 != nil {
 		log.Print(err2)
 	}*/
-	f, err3 := os.Create(filePath)
+	/*f, err3 := os.Create(filePath)
 	handleError(err3)
 	defer f.Close()
 	n, err4 := f.Write(body)
 	handleError(err4)
 	log.Printf("Wrote %d bytes", n)
-	f.Sync()
+	f.Sync()*/
+	createFile := exec.Command("echo", string(body), ">", filePath)
+	res := createFile.Run()
+	if res != nil {
+		log.Print(res)
+		fmt.Fprintf(w, "Internal server error")
+	}
 	cmd := exec.Command("Rscript", "/app/pred/recognition.R", filePath)
 	var out bytes.Buffer
 	cmd.Stdout = &out

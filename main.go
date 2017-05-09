@@ -1,11 +1,13 @@
 package main
 
 import (
+	"bytes"
 	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
+	"os/exec"
 )
 
 func handler(w http.ResponseWriter, r *http.Request) {
@@ -13,8 +15,12 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Print(err)
 	}
-	fmt.Fprintf(w, string(body))
-	/*cmd := exec.Command("Rscript", "/app/pred/recognition.R", "/app/pred/voices/erwin.wav")
+	filePath := "/app/pred/voices/tmp.wav"
+	err2 := ioutil.WriteFile(filePath, body, 0644)
+	if err2 != nil {
+		log.Print(err2)
+	}
+	cmd := exec.Command("Rscript", "/app/pred/recognition.R", filePath)
 	var out bytes.Buffer
 	cmd.Stdout = &out
 	result := cmd.Run()
@@ -23,7 +29,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		log.Print(result)
 		fmt.Fprintf(w, "Internal server error")
 	}
-	fmt.Fprintf(w, out.String())*/
+	fmt.Fprintf(w, out.String())
 }
 
 func main() {

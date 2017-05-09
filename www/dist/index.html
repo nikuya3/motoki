@@ -13,7 +13,7 @@
 		console.log(userMedia);
 		var rec = null;
 		userMedia.then(function(stream) {
-			rec = new MediaRecorder(stream/*, { mimeType: 'audio/wav' }*/);
+			rec = new MediaRecorder(stream);
 			console.log(rec)
 			rec.ondataavailable = function(e) { console.log(e.data); saveData(e); };
 		});
@@ -41,7 +41,7 @@
 				}
 			}
 			request.open("POST", "/recognize", true);
-			request.setRequestHeader("Content-Type", "audio/wav");
+			request.setRequestHeader("Content-Type", "audio/ogg");
 			request.send(e.data);
 		}
 	</script>

@@ -32,7 +32,6 @@
 		blo = null;
 		function saveData(blob) {
 			blo = blob;
-			console.log(blob);
 			var audioUrl = window.URL.createObjectURL(blob);
 			downloadAnchor = document.getElementById('downloadAnchor');
 			downloadAnchor.href = audioUrl;
@@ -44,11 +43,9 @@
 				var fileUrl = JSON.parse(fileRequest.responseText).link;
 				var request = new XMLHttpRequest();
 				request.onload = function() {
+					console.log(request.responseText);
 					answer = document.getElementById('answer');
-					switch(request.responseText) {
-						case '1': answer.innerHtml = 'female'; break;
-						case '2': answer.innerHtml = 'male'; break;
-					}
+					answer.innerHtml = request.responseText;
 				}
 				request.send(fileRequest.responseText);
 				request.send(fileUrl);

@@ -30,6 +30,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		log.Print(result)
 		fmt.Fprintf(w, "Internal server error")
 	}
+	log.Print(out.String())
 	fmt.Fprintf(w, out.String())
 }
 

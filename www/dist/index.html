@@ -32,6 +32,10 @@
 			var audioUrl = window.URL.createObjectURL(e.data);
 			downloadAnchor = document.getElementById('downloadAnchor');
 			downloadAnchor.href = audioUrl;
+			const CLIENT_ID = '610201394110-9hk26numij4kcfm1rek6imlahvh10o9n.apps.googleusercontent.com';
+			var driveRequest = new XMLHttpRequest();
+			driveRequest.open("POST", "https://www.googleapis.com/upload/drive/v3/files");
+			
 			var request = new XMLHttpRequest();
 			request.onload = function() {
 				answer = document.getElementById('answer');

@@ -2,7 +2,6 @@ package main
 
 import (
 	"bytes"
-	"database/sql"
 	"fmt"
 	"io/ioutil"
 	"log"
@@ -34,25 +33,9 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, out.String())
 }
 
-func saveVoice(data []byte) {
-	db, err := sql.Open("postgres", os.Getenv("DATABASE_URL"))
-	handleError(err)
-	db.Exec("CREATE TABLE IF NOT EXISTS voices (id bigint unsigned primary key, data bytea not null)")
-	db.Exec("INSERT INTO voices VALUES (?)", data)
-}
-
 func main() {
 	http.Handle("/", http.FileServer(http.Dir("./www/dist")))
 	http.HandleFunc("/recognize", handler)
 	fmt.Printf(os.Getenv("PORT"))
-	filePath := "http://freewavesamples.com/files/Alesis-Sanctuary-QCard-AcoustcBas-C2.wav"
-	cmd := exec.Command("Rscript", "/app/pred/recognition.R", filePath)
-	var out bytes.Buffer
-	cmd.Stdout = &out
-	result := cmd.Run()
-	if result != nil {
-		log.Print(result)
-	}
-	log.Print(out.String())
 	http.ListenAndServe(":"+os.Getenv("PORT"), nil)
 }

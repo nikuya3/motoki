@@ -7,23 +7,26 @@
 	<button onclick="stop();">Stop</button>
 	<a id="downloadAnchor" href="#">Download s</a>
 	<p id="answer" />
+	<script src="record.js"></script>
 	<script>
-		chunks = []
-		userMedia = navigator.mediaDevices.getUserMedia({ audio: true, video: false });
-		console.log(userMedia);
-		var rec = null;
+		var audioContext = new AudioContext();
+		var recorder = null;
+		var userMedia = navigator.mediaDevices.getUserMedia({ audio: true, video: false });
+		//var rec = null;
 		userMedia.then(function(stream) {
-			rec = new MediaRecorder(stream);
-			console.log(rec)
-			rec.ondataavailable = function(e) { console.log(e.data); saveData(e); };
+			//rec = new MediaRecorder(stream);
+			//rec.ondataavailable = function(e) { console.log(e.data); saveData(e); };
+			var input = audioContext.createMediaStreamSource(stream);
+			recorder = new Recorder(input);
 		});
 		
 		function start() {
-			rec.start();
+			recorder.start();
 		}
 
 		function stop() {
-			rec.stop();
+			recorder.stop();
+			recorder.exportWAV(saveData);
 		}
 		file = null;
 		blo = null;

@@ -20,9 +20,8 @@ func handleError(e error) {
 func handler(w http.ResponseWriter, r *http.Request) {
 	body, err := ioutil.ReadAll(r.Body)
 	handleError(err)
-	filePath := "/tmp/voice.wav"
+	filePath := "http://freewavesamples.com/files/Alesis-Sanctuary-QCard-AcoustcBas-C2.wav"
 	log.Print(body[:10])
-	ioutil.WriteFile(filePath, body, 0644)
 	cmd := exec.Command("Rscript", "/app/pred/recognition.R", filePath)
 	var out bytes.Buffer
 	cmd.Stdout = &out

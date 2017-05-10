@@ -6,9 +6,10 @@ library(RPostgreSQL)
 
 humanFrequency <- 280
 
-analyzeWav <- function(file, start = 0, end = Inf) {
-  wave <- file
-  tuneWave <- readWave(file.path(getwd(), wave), from = start, to = end, units = "seconds")
+analyzeWav <- function(path, start = 0, end = Inf) {
+  file <- tempfile()
+  wave <- download.file(path, file, mode = 'wb')
+  tuneWave <- readWave(file, from = start, to = end, units = "seconds")
   waveSpec <- spec(tuneWave, f = tuneWave@samp.rate, plot = F)
   analysis <- specprop(waveSpec, f = tuneWave@samp.rate, flim = c(0, humanFrequency / 1000), plot = F)
   
@@ -58,7 +59,6 @@ analyzeWav <- function(file, start = 0, end = Inf) {
 }
 
 path <- commandArgs(trailingOnly = T)
-pg <- dbDriver("PostgreSQL")
 analyzedVoice <- analyzeWav(path, end = 20)
 model.forest <- readRDS('/app/pred/model.forest.rds')
 prediction <- predict(model.forest, analyzedVoice)

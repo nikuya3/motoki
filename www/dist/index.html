@@ -30,14 +30,13 @@
 		}
 		file = null;
 		blo = null;
-		function saveData(e) {
-			blo = e.data;
-			console.log(e.data)
-			//var blob = new Blob(e.Data, { type: "audio/wav" });
-			var audioUrl = window.URL.createObjectURL(e.data);
+		function saveData(blob) {
+			blo = blob;
+			console.log(blob);
+			var audioUrl = window.URL.createObjectURL(blob);
 			downloadAnchor = document.getElementById('downloadAnchor');
 			downloadAnchor.href = audioUrl;
-			file = new File([e.data], 'test.wav');
+			file = new File([blob], 'test.wav');
 			var formData = new FormData();
 			formData.append("file", file);
 			var fileRequest = new XMLHttpRequest();

@@ -2,14 +2,19 @@
 <head>
 </head>
 <body>
-	<h1>Detect your sex</h1>
-	<h2>Using your voice</h2>
+	<h1>Detect your sex - Using your voice</h1>
 	<button id="startButton" onclick="start();">Start recording</button>
 	<button id="detectButton" onclick="stop();" disabled>Detect</button>
 	<a id="downloadAnchor" href="#" style="display: none">Download your recording</a>
 	<div id="loadingIndicator" class="loader" style="display: none"></div>
 	<span id="answer" style="display: block"></span>
+	<span style="margin: 5px"> The detection shouldn't take longer than 10s.</span>
 	<style>
+		body {
+			position: absolute;
+			top: 35%;
+			right: 35%
+		}
 		.loader {
 			border: 4px solid #f3f3f3;
 			border-top: 4px solid #3498db;
@@ -24,6 +29,7 @@
 			100% { transform: rotate(360deg); }
 		}
 	</style>
+	<link rel="stylesheet" href="https://gitcdn.link/repo/Chalarangelo/mini.css/master/dist/mini-default.min.css">
 	<script src="record.js"></script>
 	<script>
 		var audioContext = new AudioContext();

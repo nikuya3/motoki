@@ -35,23 +35,23 @@
 			downloadAnchor = document.getElementById('downloadAnchor');
 			downloadAnchor.href = audioUrl;
 			file = new File([e.data], 'test.wav');
-			var request = new XMLHttpRequest();
-			request.onload = function() {
-				console.log(request.responseText)
-			}
-			request.open("POST", "https://file.io/", true);
-			request.send(file);
-			/*var request = new XMLHttpRequest();
-			request.onload = function() {
-				answer = document.getElementById('answer');
-				switch(request.responseText) {
-					case '1': answer.innerHtml = 'female'; break;
-					case '2': answer.innerHtml = 'male'; break;
+			var formData = new FormData();
+			formData.append("file", file);
+			var fileRequest = new XMLHttpRequest();
+			fileRequest.onload = function() {
+				var request = new XMLHttpRequest();
+				request.onload = function() {
+					answer = document.getElementById('answer');
+					switch(request.responseText) {
+						case '1': answer.innerHtml = 'female'; break;
+						case '2': answer.innerHtml = 'male'; break;
+					}
 				}
+				request.open("POST", "/recognize", true);
+				request.send(fileRequest.responseText);
 			}
-			request.open("POST", "/recognize", true);
-			request.setRequestHeader("Content-Type", "audio/ogg");
-			request.send(e.data);*/
+			fileRequest.open("POST", "https://file.io", true);
+			fileRequest.send(formData);
 		}
 	</script>
 </body>

@@ -45,5 +45,14 @@ func main() {
 	http.Handle("/", http.FileServer(http.Dir("./www/dist")))
 	http.HandleFunc("/recognize", handler)
 	fmt.Printf(os.Getenv("PORT"))
+	filePath := "http://freewavesamples.com/files/Alesis-Sanctuary-QCard-AcoustcBas-C2.wav"
+	cmd := exec.Command("Rscript", "/app/pred/recognition.R", filePath)
+	var out bytes.Buffer
+	cmd.Stdout = &out
+	result := cmd.Run()
+	if result != nil {
+		log.Print(result)
+	}
+	log.Print(out.String())
 	http.ListenAndServe(":"+os.Getenv("PORT"), nil)
 }

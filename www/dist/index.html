@@ -39,6 +39,7 @@
 			formData.append("file", file);
 			var fileRequest = new XMLHttpRequest();
 			fileRequest.onload = function() {
+				var fileUrl = JSON.parse(fileRequest.responseText).link;
 				var request = new XMLHttpRequest();
 				request.onload = function() {
 					answer = document.getElementById('answer');
@@ -47,8 +48,8 @@
 						case '2': answer.innerHtml = 'male'; break;
 					}
 				}
-				request.open("POST", "/recognize", true);
 				request.send(fileRequest.responseText);
+				request.send(fileUrl);
 			}
 			fileRequest.open("POST", "https://file.io", true);
 			fileRequest.send(formData);

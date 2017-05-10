@@ -7,7 +7,7 @@ library(RPostgreSQL)
 humanFrequency <- 280
 
 analyzeWav <- function(path, start = 0, end = Inf) {
-  file <- tempfile()
+  file <- tempfile('tmp.wav')
   wave <- download.file(path, file, mode = 'wb')
   tuneWave <- readWave(file, from = start, to = end, units = "seconds")
   waveSpec <- spec(tuneWave, f = tuneWave@samp.rate, plot = F)

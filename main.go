@@ -33,10 +33,10 @@ func handler(w http.ResponseWriter, r *http.Request) {
 
 	switch out.String() {
 	case "1":
-		fmt.Fprintf(w, "Male")
+		fmt.Fprintf(w, "Female")
 
 	case "2":
-		fmt.Fprintf(w, "Female")
+		fmt.Fprintf(w, "Male")
 	}
 }
 

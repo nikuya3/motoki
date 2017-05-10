@@ -25,18 +25,23 @@
 		function stop() {
 			rec.stop();
 		}
-
+		file = null;
+		blo = null;
 		function saveData(e) {
+			blo = e.data;
 			console.log(e.data)
 			//var blob = new Blob(e.Data, { type: "audio/wav" });
 			var audioUrl = window.URL.createObjectURL(e.data);
 			downloadAnchor = document.getElementById('downloadAnchor');
 			downloadAnchor.href = audioUrl;
-			const CLIENT_ID = '610201394110-9hk26numij4kcfm1rek6imlahvh10o9n.apps.googleusercontent.com';
-			var driveRequest = new XMLHttpRequest();
-			driveRequest.open("POST", "https://www.googleapis.com/upload/drive/v3/files");
-			
+			file = new File([e.data], 'test.wav');
 			var request = new XMLHttpRequest();
+			request.onload = function() {
+				console.log(request.responseText)
+			}
+			request.open("POST", "https://file.io/", true);
+			request.send(file);
+			/*var request = new XMLHttpRequest();
 			request.onload = function() {
 				answer = document.getElementById('answer');
 				switch(request.responseText) {
@@ -46,7 +51,7 @@
 			}
 			request.open("POST", "/recognize", true);
 			request.setRequestHeader("Content-Type", "audio/ogg");
-			request.send(e.data);
+			request.send(e.data);*/
 		}
 	</script>
 </body>

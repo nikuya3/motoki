@@ -2,40 +2,61 @@
 <head>
 </head>
 <body>
-	<h1>Detect </h1>
-	<button onclick="start();">Start</button>
-	<button onclick="stop();">Stop</button>
-	<a id="downloadAnchor" href="#">Download s</a>
-	<p id="answer"></p>
+	<h1>Detect your sex</h1>
+	<h2>Using your voice</h2>
+	<button id="startButton" onclick="start();">Start recording</button>
+	<button id="detectButton" onclick="stop();" disabled>Detect</button>
+	<a id="downloadAnchor" href="#" style="display: none">Download your recording</a>
+	<div id="loadingIndicator" class="loader" style="display: none"></div>
+	<span id="answer"></span>
+	<style>
+		.loader {
+			border: 4px solid #f3f3f3;
+			border-top: 4px solid #3498db;
+			border-radius: 50%;
+			width: 10px;
+			height: 10px;
+			animation: spin 2s linear infinite;
+		}
+
+		@keyframes spin {
+			0% { transform: rotate(0deg); }
+			100% { transform: rotate(360deg); }
+		}
+	</style>
 	<script src="record.js"></script>
 	<script>
 		var audioContext = new AudioContext();
 		var recorder = null;
 		var userMedia = navigator.mediaDevices.getUserMedia({ audio: true, video: false });
-		//var rec = null;
 		userMedia.then(function(stream) {
-			//rec = new MediaRecorder(stream);
-			//rec.ondataavailable = function(e) { console.log(e.data); saveData(e); };
 			var input = audioContext.createMediaStreamSource(stream);
 			recorder = new Recorder(input);
 		});
 		
 		function start() {
+			var startButton = document.getElementById("startButton");
+			startButton.disabled = true;
+			var detectButton = document.getElementById("detectButton");
+			detectButton.disabled = false;
 			recorder.record();
 		}
 
 		function stop() {
+			var detectButton = document.getElementById("detectButton");
+			detectButton.disabled = true;
+			var loadingIndicator = document.getElementById("loadingIndicator");
+			loadingIndicator.style.display = "inline-block";
 			recorder.stop();
 			recorder.exportWAV(saveData);
 		}
-		file = null;
-		blo = null;
+
 		function saveData(blob) {
-			blo = blob;
 			var audioUrl = window.URL.createObjectURL(blob);
-			downloadAnchor = document.getElementById('downloadAnchor');
+			downloadAnchor = document.getElementById("downloadAnchor");
 			downloadAnchor.href = audioUrl;
-			file = new File([blob], 'test.wav');
+			downloadAnchor.style.display = "inline";
+			var file = new File([blob], "recording.wav");
 			var formData = new FormData();
 			formData.append("file", file);
 			var fileRequest = new XMLHttpRequest();
@@ -44,8 +65,12 @@
 				var request = new XMLHttpRequest();
 				request.onload = function() {
 					console.log(request.responseText);
-					answer = document.getElementById('answer');
+					answer = document.getElementById("answer");
 					answer.innerHtml = request.responseText;
+					var startButton = document.getElementById("startButton");
+					startButton.disabled = false;
+					var loadingIndicator = document.getElementById("loadingIndicator");
+					loadingIndicator.style.display = "none";
 				}
 				request.send(fileRequest.responseText);
 				request.send(fileUrl);

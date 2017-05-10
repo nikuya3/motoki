@@ -2,7 +2,6 @@ library(fftw)
 library(randomForest)
 library(seewave)
 library(tuneR)
-library(RPostgreSQL)
 
 humanFrequency <- 280
 

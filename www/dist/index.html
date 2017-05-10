@@ -66,7 +66,12 @@
 				request.onload = function() {
 					console.log(request.responseText);
 					answer = document.getElementById("answer");
-					answer.textContent = "You are: " + request.responseText;
+					switch(request.responseText) {
+						case "Female": answer.textContent = "You are female"; break;
+						case "Male": answer.textContent = "You are male"; break;
+						case "Internal server error": answer.textContent = "There was an error."; break;
+					}
+					
 					var startButton = document.getElementById("startButton");
 					startButton.disabled = false;
 					var loadingIndicator = document.getElementById("loadingIndicator");

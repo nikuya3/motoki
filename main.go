@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"os"
 	"os/exec"
+	"strings"
 )
 
 func handleError(e error) {
@@ -19,7 +20,7 @@ func handleError(e error) {
 func handler(w http.ResponseWriter, r *http.Request) {
 	body, err := ioutil.ReadAll(r.Body)
 	handleError(err)
-	filePath := string(body)
+	filePath := strings.Replace(string(body), "https", "http", 1)
 	log.Print(string(body))
 	cmd := exec.Command("Rscript", "--verbose", "/app/pred/recognition.R", filePath)
 	var out bytes.Buffer

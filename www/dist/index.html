@@ -58,13 +58,13 @@
 			recorder.stop();
 			recorder.exportWAV(saveData);
 		}
-
+		file = null;
 		function saveData(blob) {
 			var audioUrl = window.URL.createObjectURL(blob);
 			downloadAnchor = document.getElementById("downloadAnchor");
 			downloadAnchor.href = audioUrl;
 			downloadAnchor.style.display = "inline";
-			var file = new File([blob], "recording.wav");
+			file = new File([blob], "recording.wav");
 			var formData = new FormData();
 			formData.append("file", file);
 			var fileRequest = new XMLHttpRequest();

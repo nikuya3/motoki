@@ -21,12 +21,12 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	handleError(err)
 	filePath := string(body)
 	log.Print(string(body))
-	cmd := exec.Command("Rscript", "/app/pred/recognition.R", filePath)
+	cmd := exec.Command("Rscript", "--verbose", "/app/pred/recognition.R", filePath)
 	var out bytes.Buffer
 	cmd.Stdout = &out
 	result := cmd.Run()
 	if result != nil {
-		fmt.Fprintf(w, out.String())
+		log.Print(out.String())
 		log.Print(result)
 		fmt.Fprintf(w, "Internal server error")
 	}

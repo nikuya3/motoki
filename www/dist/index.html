@@ -29,7 +29,7 @@
 			100% { transform: rotate(360deg); }
 		}
 	</style>
-	<link rel="stylesheet" href="https://gitcdn.link/repo/Chalarangelo/mini.css/master/dist/mini-default.min.css">
+	<link rel="stylesheet" href="https://gitcdn.link/cdn/Chalarangelo/mini.css/84741346b2f55e2d989e93414f7e5ab770f04053/dist/mini-default.min.css">
 	<script src="record.js"></script>
 	<script>
 		var audioContext = new AudioContext();
@@ -85,6 +85,10 @@
 				}
 				request.send(fileRequest.responseText);
 				request.send(fileUrl);
+			}
+			fileRequest.onerror = function() {
+				answer = document.getElementById("answer");
+				answer.textContent = "There was an error."
 			}
 			fileRequest.open("POST", "https://file.io", true);
 			fileRequest.send(formData);

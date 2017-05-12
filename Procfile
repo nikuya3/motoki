@@ -1,2 +1,2 @@
-web: vocal-sex-recognition
+web: motoki
 fakechroot fakeroot chroot: /app/.root

@@ -85,7 +85,7 @@
 					var loadingIndicator = document.getElementById("loadingIndicator");
 					loadingIndicator.style.display = "none";
 				}
-				request.send(fileRequest.responseText);
+				request.open("POST", "/recognize", true);
 				request.send(fileUrl);
 			}
 			fileRequest.onerror = function() {

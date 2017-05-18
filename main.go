@@ -59,5 +59,5 @@ func main() {
 	http.HandleFunc("/recognize", handler)
 	http.HandleFunc("/rate", handleRate)
 	fmt.Printf(os.Getenv("PORT"))
-	http.ListenAndServe(":8080"+os.Getenv("PORT"), nil)
+	http.ListenAndServe(":"+os.Getenv("PORT"), nil)
 }

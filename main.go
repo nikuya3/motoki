@@ -48,7 +48,7 @@ func handleRate(w http.ResponseWriter, r *http.Request) {
 	correct := strings.Split(string(body), " ")[1]
 	db, err2 := sql.Open("postgres", os.Getenv("DATABASE_URL"))
 	handleError(err2)
-	stmt, err3 := db.Prepare("update predictions set correct=$1 where voiceId=$2")
+	stmt, err3 := db.Prepare("update predictions set correct=$1 where voice_id_fk=$2")
 	handleError(err3)
 	res, err4 := stmt.Exec(voiceId, correct[1])
 	handleError(err4)

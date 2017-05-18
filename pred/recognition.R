@@ -50,9 +50,9 @@ analyzeWav <- function(path, start = 0, end = Inf) {
   }
   if(mindom == maxdom) modindx <- 0 else modindx <- mean(changes, na.rm = T) / dfrange
   
-  obj <- data.frame(duration, meanfreq, sd, median, Q25, Q75, IQR, skew, kurt, sp.ent, sfm, mode, 
+  obj <- data.frame(meanfreq, sd, median, Q25, Q75, IQR, skew, kurt, sp.ent, sfm, mode, 
                     centroid, meanfun, minfun, maxfun, meandom, mindom, maxdom, dfrange, modindx)
-  names(obj) <- c("duration", "meanfreq", "sd", "median", "Q25", "Q75", "IQR", "skew", "kurt", "sp.ent", 
+  names(obj) <- c("meanfreq", "sd", "median", "Q25", "Q75", "IQR", "skew", "kurt", "sp.ent", 
                   "sfm","mode", "centroid", "meanfun", "minfun", "maxfun", "meandom", "mindom", "maxdom",
                   "dfrange", "modindx")
   obj

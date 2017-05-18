@@ -75,8 +75,8 @@
 					console.log(request.responseText);
 					answer = document.getElementById("answer");
 					switch(request.responseText) {
-						case "Female": answer.textContent = "You are female"; break;
-						case "Male": answer.textContent = "You are male"; break;
+						case "1": answer.textContent = "You are female"; break;
+						case "2": answer.textContent = "You are male"; break;
 						case "Internal server error": answer.textContent = "There was an error."; break;
 					}
 					

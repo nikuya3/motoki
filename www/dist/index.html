@@ -10,8 +10,8 @@
 	<a id="downloadAnchor" href="#" style="display: none">Download your recording</a>
 	<div id="loadingIndicator" class="loader" style="display: none"></div>
 	<span id="answer" style="display: block"></span>
-	<button id="correctButton" style="display: none">Correct</button>
-	<button id="notCorrectButton" style="display: none">Not correct</button>
+	<button id="correctButton" class="primary" style="display: none">Correct</button>
+	<button id="notCorrectButton" class="secondary" style="display: none">Not correct</button>
 	<span style="margin: 5px"> The detection shouldn't take longer than 10s.</span>
 	<style>
 		body {
@@ -88,20 +88,27 @@
 
 						var correctButton = document.getElementById("correctButton");
 						correctButton.style.display = 'inline';
+
+						var notCorrectButton = document.getElementById("notCorrectButton");
+						notCorrectButton.style.display = 'inline';
+
+
 						correctButton.onclick = function() {
 							var correctRequest = new XMLHttpRequest();
 							correctRequest.onload = function() { console.log(request.responseText); }
 							correctRequest.open("POST", "/rate", true);
 							correctRequest.send(responseData[1] + " true");
+							correctButton.style.display = 'none';
+							notCorrectButton.style.display = 'none';
 						}
 
-						var notCorrectButton = document.getElementById("notCorrectButton");
-						notCorrectButton.style.display = 'inline';
 						notCorrectButton.onclick = function() {
 							var correctRequest = new XMLHttpRequest();
 							correctRequest.onload = function() { console.log(request.responseText); }
 							correctRequest.open("POST", "/rate", true);
 							correctRequest.send(responseData[1] + " false");
+							correctButton.style.display = 'none';
+							notCorrectButton.style.display = 'none';
 						}
 						
 					}

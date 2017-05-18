@@ -10,6 +10,8 @@ import (
 	"os"
 	"os/exec"
 	"strings"
+
+	_ "github.com/lib/pq"
 )
 
 func handleError(e error) {
@@ -35,8 +37,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		log.Print(result)
 		fmt.Fprintf(w, "Internal server error")
 	}
-	log.Print(out.String())
-	log.Print(errout.String())
+
 	fmt.Fprintf(w, out.String())
 }
 

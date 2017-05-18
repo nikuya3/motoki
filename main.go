@@ -2,6 +2,7 @@ package main
 
 import (
 	"bytes"
+	"database/sql"
 	"fmt"
 	"io/ioutil"
 	"log"
@@ -39,9 +40,24 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, out.String())
 }
 
+func handleRate(w http.ResponseWriter, r *http.Request) {
+	body, err := ioutil.ReadAll(r.Body)
+	handleError(err)
+	voiceId := strings.Split(string(body), " ")[0]
+	correct := strings.Split(string(body), " ")[1]
+	db, err2 := sql.Open("postgres", os.Getenv("DATABASE_URL"))
+	handleError(err2)
+	stmt, err3 := db.Prepare("update predictions set correct=$1 where voiceId=$2")
+	handleError(err3)
+	res, err4 := stmt.Exec(voiceId, correct[1])
+	handleError(err4)
+	log.Print(res)
+}
+
 func main() {
 	http.Handle("/", http.FileServer(http.Dir("./www/dist")))
 	http.HandleFunc("/recognize", handler)
+	http.HandleFunc("/rate", handleRate)
 	fmt.Printf(os.Getenv("PORT"))
-	http.ListenAndServe(":"+os.Getenv("PORT"), nil)
+	http.ListenAndServe(":8080"+os.Getenv("PORT"), nil)
 }

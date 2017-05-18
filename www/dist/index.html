@@ -10,6 +10,8 @@
 	<a id="downloadAnchor" href="#" style="display: none">Download your recording</a>
 	<div id="loadingIndicator" class="loader" style="display: none"></div>
 	<span id="answer" style="display: block"></span>
+	<button id="correctButton" style="display: none">Correct</button>
+	<button id="notCorrectButton" style="display: none">Not correct</button>
 	<span style="margin: 5px"> The detection shouldn't take longer than 10s.</span>
 	<style>
 		body {
@@ -74,6 +76,35 @@
 				request.onload = function() {
 					console.log(request.responseText);
 					answer = document.getElementById("answer");
+					if (request.responseText == "Internal server error") {
+						answer.textContent = "There was an error.";
+					}
+					else {
+						var responseData = request.responseText.split(" ");
+						switch(responseData[0]) {
+							case "1": answer.textContent = "You are female"; break;
+							case "2": answer.textContent = "You are male"; break;
+						}
+
+						var correctButton = document.getElementById("correctButton");
+						correctButton.style.display = 'inline';
+						correctButton.onclick = function() {
+							var correctRequest = new XMLHttpRequest();
+							correctRequest.onload = function() { console.log(request.responseText); }
+							correctRequest.open("POST", "/rate", true);
+							correctRequest.send(responseData[1] + " true");
+						}
+
+						var notCorrectButton = document.getElementById("notCorrectButton");
+						notCorrectButton.style.display = 'inline';
+						notCorrectButton.onclick = function() {
+							var correctRequest = new XMLHttpRequest();
+							correctRequest.onload = function() { console.log(request.responseText); }
+							correctRequest.open("POST", "/rate", true);
+							correctRequest.send(responseData[1] + " false");
+						}
+						
+					}
 					switch(request.responseText) {
 						case "1": answer.textContent = "You are female"; break;
 						case "2": answer.textContent = "You are male"; break;

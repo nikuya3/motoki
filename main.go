@@ -35,16 +35,20 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, "Internal server error")
 	}
 
-	output := strings.Split(out.String(), " ")
-	switch output[0] {
-	case "1":
-		fmt.Fprintf(w, "Female")
+	if len(out.String()) > 0 {
+		output := strings.Split(out.String(), " ")
+		switch output[0] {
+		case "1":
+			fmt.Fprintf(w, "Female")
 
-	case "2":
-		fmt.Fprintf(w, "Male")
+		case "2":
+			fmt.Fprintf(w, "Male")
+		}
+
+		fmt.Fprintf(w, output[1])
+	} else {
+		fmt.Fprintf(w, out.String())
 	}
-
-	fmt.Fprintf(w, output[1])
 }
 
 func main() {

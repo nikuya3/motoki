@@ -50,9 +50,10 @@ func handleRate(w http.ResponseWriter, r *http.Request) {
 	handleError(err2)
 	stmt, err3 := db.Prepare("update predictions set correct=$1 where voice_id_fk=$2")
 	handleError(err3)
-	res, err4 := stmt.Exec(voiceId, correct[1])
+	res, err4 := stmt.Exec(correct, voiceId)
 	handleError(err4)
 	log.Print(res)
+	fmt.Fprintf(w, "Success")
 }
 
 func main() {
